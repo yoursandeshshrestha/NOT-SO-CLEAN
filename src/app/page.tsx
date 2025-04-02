@@ -1,3 +1,12 @@
+import { ProductProvider } from "@/core/home/presentation/di/ProductProvider";
+import ProductListPage from "@/core/home/presentation/view/ProductListPage";
+
 export default function Home() {
-  return <div>Basic app</div>;
+  return (
+    <>
+      <ProductProvider>
+        <ProductListPage />
+      </ProductProvider>
+    </>
+  );
 }
