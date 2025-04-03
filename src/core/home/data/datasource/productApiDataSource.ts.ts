@@ -1,16 +1,18 @@
 import axios from "axios";
-import { ProductModel } from "../model/productModel";
 import { API_BASE } from "@/common/constants/api-endpoint";
+import { ProductModel } from "../model/productModel";
 
 export class ProductApiDataSource {
   async getProducts(): Promise<ProductModel[]> {
     const res = await axios.get(`${API_BASE}`);
-    console.log("datasource =====", res.data);
-    return res.data.products;
+    const products = res.data.products || [];
+    return products.map((item: Record<string, unknown>) =>
+      ProductModel.fromJson(item)
+    );
   }
 
   async getProductById(id: number): Promise<ProductModel> {
     const res = await axios.get(`${API_BASE}/${id}`);
-    return res.data;
+    return ProductModel.fromJson(res.data);
   }
 }
