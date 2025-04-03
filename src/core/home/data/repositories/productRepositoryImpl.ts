@@ -1,6 +1,5 @@
 import { ProductRepository } from "../../domain/repositories/productRepository";
 import { ProductEntity } from "../../domain/entity/productEntity";
-import { ProductModelMapper } from "../model/productModel";
 import { ProductApiDataSource } from "../datasource/productApiDataSource.ts";
 
 export class ProductRepositoryImpl implements ProductRepository {
@@ -8,11 +7,11 @@ export class ProductRepositoryImpl implements ProductRepository {
 
   async getProducts(): Promise<ProductEntity[]> {
     const products = await this.productApi.getProducts();
-    return products.map((p) => ProductModelMapper.toEntity(p));
+    return products.map((p) => p.toEntity());
   }
 
   async getProductById(id: number): Promise<ProductEntity> {
     const product = await this.productApi.getProductById(id);
-    return ProductModelMapper.toEntity(product);
+    return product.toEntity();
   }
 }
